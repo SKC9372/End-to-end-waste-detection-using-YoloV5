@@ -1,3 +1,5 @@
-from WasteDetection.logger import logging
+from WasteDetection.pipeline.training_pipeline import TrainingPipeline
 
-logging.info("Welcome to my custom log")
+obj = TrainingPipeline()
+
+obj.run_pipeline()
