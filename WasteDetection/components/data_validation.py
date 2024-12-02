@@ -31,7 +31,7 @@ class DataValidation:
                     validation_status = True
                     os.makedirs(self.data_validation_config.data_validation_dir,exist_ok=True)
                     with open(self.data_validation_config.valid_status_file_dir,'w') as f:
-                        f.write(f"Validation staus: {validation_status}")
+                        f.write(f"Validation status: {validation_status}")
             return validation_status
         except Exception as e:
             raise AppException(e,sys)
@@ -44,9 +44,11 @@ class DataValidation:
                 data_validation_status=status)
             logging.info("Exited intiate_data_validation method")
             logging.info(f"DataValidationArtifact : {data_validation_artifact}")
+            
+            file_path = os.path.abspath(self.data_ingestion_artifact.data_zip_file_path)
 
             if status:
-                shutil.copy(self.data_ingestion_artifact.data_zip_file_path,os.getcwd())
+                shutil.copy(file_path,os.getcwd())
             return data_validation_artifact
         except Exception as e:
             raise AppException(e,sys)

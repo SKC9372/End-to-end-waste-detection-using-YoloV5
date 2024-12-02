@@ -1,5 +1,6 @@
 import os,sys
 import yaml
+import zipfile
 from WasteDetection.utils.main_utils import read_yaml_file
 from WasteDetection.logger import logging
 from WasteDetection.exception import AppException
@@ -16,7 +17,8 @@ class ModelTrainer:
         logging.info("Enteres Model Trainer class of model_trainer")
         try:
             logging.info("Unzipping Data")
-            os.system("unzip data.zip")
+            with zipfile.ZipFile('data.zip', 'r') as zip_ref:
+                  zip_ref.extractall(os.getcwd())
             os.system("rm data.zip")
 
             with open('data.yaml', 'r') as f:
@@ -32,7 +34,7 @@ class ModelTrainer:
             with open(f"yolov5/models/custom_{model_config_file_name}.yaml",'w') as f:
                  yaml.dump(config, f) 
 
-            os.system(f"cd yolov5/ && python train.py --img 416 --batch {self.model_trainer_config.batch_size} --epochs {self.model_trainer_config.no_epochs} --data ../data.yaml --cfg ./models/custom_yolov5s.yaml --weights {self.model_trainer_config.weight_name} --name yolov5s_results  --cache")
+            os.system(f"cd yolov5/ && python train.py --img 416 --batch {self.model_trainer_config.batch_size} --epochs {self.model_trainer_config.no_epochs} --data ../data.yaml --cfg ./models/custom_yolov5s.yaml --weights {self.model_trainer_config.weight_name} --name yolov5s_results  --cache --workers 2")
             os.system("cp yolov5/runs/train/yolov5s_results/weights/best.pt yolov5/")
             os.makedirs(self.model_trainer_config.model_training_dir, exist_ok=True)
             os.system(f"cp yolov5/runs/train/yolov5s_results/weights/best.pt  {self.model_trainer_config.model_training_dir}/" )
