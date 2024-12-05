@@ -34,8 +34,11 @@ import os
 import platform
 import sys
 from pathlib import Path 
-
+import pathlib
 import torch
+
+temp = pathlib.PosixPath
+pathlib.PosixPath = pathlib.WindowsPath
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[0]  # YOLOv5 root directory

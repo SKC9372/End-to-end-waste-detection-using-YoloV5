@@ -35,7 +35,7 @@ def predictRoute():
         image = request.json['image']
         decode_image(image, clApp.filename)
 
-        os.system("cd yolov5/ && python detect.py --weights best.pt --img 416 --conf 0.5 --source ../data/inputImage.jpg")
+        os.system("cd yolov5/ && python detect.py --weights best.pt --img 640 --conf 0.5 --source ../data/inputImage.jpg")
 
         opencodedbase64 = encodeImage("yolov5/runs/detect/exp/inputImage.jpg")
         result = {"image": opencodedbase64.decode('utf-8')}
@@ -71,4 +71,4 @@ def predictLive():
 
 if __name__ == "__main__":
     clApp = ClientApp()
-    app.run(host=APP_HOST, port=APP_PORT) 
+    app.run(host=APP_HOST, port=APP_PORT)

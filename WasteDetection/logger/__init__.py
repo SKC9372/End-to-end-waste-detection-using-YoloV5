@@ -15,9 +15,6 @@ log_file = f"{datetime.now().strftime('%m_%d_%Y_%H_%M_%S')}.log"
 # Define full log file path
 log_file_path = os.path.join(log_dir, log_file)
 
-# Print log path for debugging
-print(f"Log file path: {log_file_path}")
-
 # Configure logging
 logging.basicConfig(
     filename=log_file_path,
